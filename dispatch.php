@@ -44,7 +44,7 @@ $conn->close();
   {
 	  require_once 'db.php';
 	  
-	  // Create database connection
+	  // Create connection
 	  $conn = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE);
 	  // Check connection
 	  if ($conn->connect_error) {
@@ -128,13 +128,13 @@ for($i=0; $i < $numOfPatrocarDispatched; $i++)
     <td>Description :</td>
 	<td><textarea name="incidentDesc" cols="45"
 	        rows="5" readonly id="incidentDesc"><?php echo $_POST['incidentDesc'] ?></textarea>
-	     <input name="incidentDesc" type="hidden"
-	     id="incidentDesc" value="<?php echo $_POST['incidentDesc'] ?>"></td>
+	     <input name="incidentDesc" type="hidden" 
+		 id="incidentDesc" value="<?php echo $_POST['incidentDesc'] ?>"></td>
   </tr>
 </table>
 <br><br>
 <!-- populate table with patrol car data -->
-<table class="Contentstyle">
+<table class="ContentStyle">
    <tr>
      <td colspan="3">Dispatch Patrolcar Panel</td>
    </tr>

@@ -1,3 +1,14 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Police Emergency Service System</title>
+<link href="header_style.css" rel="stylesheet" type="text/css">
+<link href="content_style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
 <!-- Part 1 -->
 <?php require_once 'nav.php'; ?>
 <br><br>
@@ -17,7 +28,48 @@ action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?> ">
 </table>
 </form>
 <?php
-} ?>
+}
+/* if postback via clicking Search button */
+else
+  require_once 'db.php';
+
+  // create database connection
+  $conn = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE);
+  // Check connection
+  if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+  }
+  
+  // retrieve patrol car detail
+  $sql = "SELECT * FROM patrolcar WHERE patrolcar_id = '".$_POST['patrolCarId']."'";
+  $result = $conn->query($sql);
+  
+  // if the patrol car does not exist, redirect back to update.php
+  if ($result->num_rows == 0) {
+  ?>
+       <script type="text/javascript">window.location="./update.php";</script>
+  <?php }
+// else if the patrol car found
+while ($row = $result->fetch_assoc()) {
+  $patrolCarId = $row['patrolcar_id'];
+  $patrolcarStatusId = $row['patrolcar_status_id'];
+}
+
+// retrieve from patrolcar_status table for populating the combo box
+$sql = "SELECT * FROM patrolcar_status";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+  while ($row = $result->fetch_assoc()) {
+	$patrolCarStatusArray[$row['patrolcar_status_id']] = $row['patrolcar_status_desc'];
+  }
+}
+
+while ($row = $result->fetch_assoc()) {
+  $patrolCarStatusArray[$row['patrolcar_status_id']] = $row['patrolcar_status_desc'];
+}
+
+$conn->close();
+?>
 		 
 <!-- display a form for operator to update status of patrol car -->
 <form name="form2" method="post"
@@ -99,3 +151,7 @@ if (isset($_POST["btnUpdate"])){
   ?>
 <script type="text/javascript">window.location="./logcall.php";</script>
 <?php } ?>
+
+
+</body>
+</htmi>
