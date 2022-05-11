@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -29,8 +28,10 @@ action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?> ">
 </form>
 <?php
 }
+
 /* if postback via clicking Search button */
 else
+{
   require_once 'db.php';
 
   // create database connection
@@ -60,12 +61,8 @@ $sql = "SELECT * FROM patrolcar_status";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
-	$patrolCarStatusArray[$row['patrolcar_status_id']] = $row['patrolcar_status_desc'];
+	$patrolcarStatusArray[$row['patrolcar_status_id']] = $row['patrolcar_status_desc'];
   }
-}
-
-while ($row = $result->fetch_assoc()) {
-  $patrolCarStatusArray[$row['patrolcar_status_id']] = $row['patrolcar_status_desc'];
 }
 
 $conn->close();
@@ -106,6 +103,7 @@ $conn->close();
 
 <!-- Part 3 -->
 <?php
+}
 /* if postback via clicking Update button */
 if (isset($_POST["btnUpdate"])){
   require_once 'db.php';
